@@ -1,0 +1,22 @@
+{
+  "name": "apv",
+  "version": "1.0.0",
+  "description": "Administrador de pacientes de veterinaria",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aitageo/APV.git"
+  },
+  "author": "aitageo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aitageo/APV/issues"
+  },
+  "homepage": "https://github.com/aitageo/APV#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
