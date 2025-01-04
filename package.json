@@ -1,10 +1,13 @@
 {
   "name": "apv",
   "version": "1.0.0",
+  "type": "module",
   "description": "Administrador de pacientes de veterinaria",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,11 @@
   },
   "homepage": "https://github.com/aitageo/APV#readme",
   "dependencies": {
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^6.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
