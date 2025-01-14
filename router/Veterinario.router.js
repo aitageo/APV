@@ -1,17 +1,24 @@
 import express from 'express';
-import { registrar,perfil,login,confirmar,ListVeterinarios,autenticar } from '../controllers/Veterinario.controller.js';
+import { 
+    registrar,perfil,confirmar,
+    ListVeterinarios,login,olvidePassword,
+    comprobarToken,nuevoPassword
+} 
+
+from '../controllers/Veterinario.controller.js';
 import { ensureAuth } from '../middlewares/auth.js';
 
 const app = express.Router();
 
 
 app.post('/',registrar);
-app.get('/perfil',perfil);
-app.get('/ListVeterinarios',ListVeterinarios);
-app.post('/login',login);
 app.get('/confirmar/:token',confirmar);
-app.post('/autenticar',autenticar);
-
+app.get('/perfil',ensureAuth,perfil);
+app.post('/login',login);
+app.get('/ListVeterinarios',ListVeterinarios);
+app.post('olvide-password',olvidePassword);
+app.get('olvide-password/:token',comprobarToken);
+app.post('olvide-password/:token',nuevoPassword);
 
 
 
