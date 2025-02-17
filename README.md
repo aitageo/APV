@@ -2,7 +2,7 @@ Administrador de pacientes de veterinaria
 
 ## Descripción
 
-VeterinariaApp es una aplicación web diseñada para facilitar la gestión de las citas de los pacientes (mascotas) y la información de los clientes (propietarios). La aplicación permite a los veterinarios gestionar las citas, los registros médicos, los tratamientos y la información de los animales de manera eficiente.
+APV es una aplicación web diseñada para facilitar la gestión de las citas de los pacientes (mascotas) y la información de los clientes (propietarios). La aplicación permite a los veterinarios gestionar las citas, los registros médicos, los tratamientos y la información de los animales de manera eficiente.
 
 ## Características
 
