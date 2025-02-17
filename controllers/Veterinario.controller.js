@@ -1,7 +1,10 @@
+import nodemailer from "nodemailer";
 import Veterinario from '../models/Veterinario.models.js';
-import { generarJsonToken } from '../middlewares/auth.js';
 import { generarToken,generarId } from '../middlewares/auth.js';
 import { v4 as uuidv4 } from 'uuid'; 
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const registrar =  async(req,res) => {
     const { email } = req.body;
@@ -103,36 +106,49 @@ const login = async (req, res) => {
 
 
 
-const olvidePassword = async (req,res) => {
+const enviarCodigoRecuperacion = async (req, res) => {
     const { email } = req.body;
 
-    const existeVeterinario = await Veterinario.findOne({email});
-    const error = new Error('El usuario no existe');
-    if (!existeVeterinario) {
-        return res.statu(404).send({msg: error.message })
+    const usuario = await Veterinario.findOne({ email });
+    if (!usuario) {
+        return res.status(404).json({ msg: "Usuario no encontrado" });
     }
 
+    const codigoRecuperacion = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiracion = Date.now() + 10 * 60 * 1000;
+
+    usuario.codigoRecuperacion = codigoRecuperacion;
+    usuario.codigoExpiracion = expiracion;
+    await usuario.save();
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: usuario.email,
+        subject: "Código de recuperación",
+        text: `Tu código de recuperación es: ${codigoRecuperacion}. Este código expira en 10 minutos.`,
+    };
 
     try {
-        existeVeterinario.token = generarId();
-        await existeVeterinario.save();
-        res.send({msg: "Hemos enviado un email con las instrucciones"});
+        await transporter.sendMail(mailOptions);
+        res.json({ msg: "Correo enviado con éxito" });
     } catch (error) {
-        console.log(error);
+        console.error("Error al enviar el correo:", error);
+        res.status(500).json({ msg: "Error al enviar el correo" });
     }
-  
-};
-
-
-const comprobarToken = (req,res) => {
-  
 };
 
 
 
-const nuevoPassword = (req,res) => {
-  
-}
 
 
 
@@ -142,7 +158,6 @@ export {
     confirmar,
     ListVeterinarios,
     login,
-    olvidePassword,
-    comprobarToken,
-    nuevoPassword
+    enviarCodigoRecuperacion
+    
 }

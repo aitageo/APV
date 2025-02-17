@@ -36,6 +36,14 @@ const Veterinarioschema = mongoose.Schema({
         default:false
     },
 
+    codigoRecuperacion: {
+        type: String,
+        default: null,
+    },
+    codigoExpiracion: {
+        type: Date,
+        default: null,
+    },
 
 });
 
